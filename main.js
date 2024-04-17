@@ -66,7 +66,8 @@ class MyAlarm extends utils.Adapter {
         For every state in the system there has to be also an object of type state
         Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
         */
-
+   
+        
         this.setObject('info.AlarmJson', {
             type: 'state',
             common: {
