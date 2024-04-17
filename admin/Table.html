@@ -218,7 +218,7 @@ tr.pq-row-delete td
                     $.ajax($.extend({}, ajaxObj, {
                         context: $grid,
                         url: "alarms/delete?rowdata=", //for ASP.NET, java
-                        data: { AlarmID: AlarmID },
+                        data: { AlarmID: AlarmID, Tagname: rowData.TagName },
                         success: function () {
                             this.pqGrid("commit");
                             this.pqGrid("refreshDataAndView");
