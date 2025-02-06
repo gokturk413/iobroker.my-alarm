@@ -406,6 +406,8 @@ class MyAlarm extends utils.Adapter {
 
                 if (state.val=='0' || state.val != 'ack')
                 {
+                    if(state.val=='' && state.val < element[0].LowLimit) 
+                    {  
                     if (value <= element[0].LowLimit)
                     {
                         limitmessage = element[0].LowLimitMessage;
@@ -432,12 +434,15 @@ class MyAlarm extends utils.Adapter {
                         self.dbAddLogAlarm(element[0].TagName, element[0].AlarmType, element[0].AlarmDescription, element[0].LowLimit,element[0].LowLimitMessage,'low',formattedDate,value);
                     }
                 }
+                }
             });
 
             this.getState(element[0].HighRefTagName,function (err, state)
             {
                 if (state.val=='0' || state.val != 'ack')
                 {
+                    if( state.val=='' && state.val < element[0].HighLimit)
+                    {             
                     if (value >= element[0].HighLimit)
                     {
                         limitmessage = element[0].HighLimitMessage;
@@ -462,6 +467,7 @@ class MyAlarm extends utils.Adapter {
                         self.setState('info.AlarmType', {val: element[0].AlarmType, ack: true});
                         self.dbAddLogAlarm(element[0].TagName, element[0].AlarmType, element[0].AlarmDescription, element[0].HighLimit, element[0].HighLimitMessage,'high',formattedDate, value);
                     }
+                    }
                 }
             });
 
@@ -469,11 +475,11 @@ class MyAlarm extends utils.Adapter {
             //reset 0
             this.getState(element[0].TagName,function (err, state)
             {
-                if (value <= element[0].HighLimit && value >= element[0].LowLimit)
+                if (value < element[0].HighLimit && value > element[0].LowLimit)
                 {
                     self.setState('info.AlarmMessage', {val: 0, ack: true});
-                    self.setState(element[0].LowRefTagName, {val: '0', ack: true});
-                    self.setState(element[0].HighRefTagName, {val: '0', ack: true});
+                    self.setState(element[0].LowRefTagName, {val: '', ack: true});
+                    self.setState(element[0].HighRefTagName, {val: '', ack: true});
                     self.setState('info.isAlarm', {val: false, ack: true});
                     self.setState('info.AlarmType', {val: '0', ack: true});
                     self.setState('info.AlarmSound', {val: '0', ack: true});
