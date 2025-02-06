@@ -210,7 +210,7 @@ tr.pq-row-delete td
                 $grid.pqGrid("addClass", { rowIndx: rowIndx, cls: 'pq-row-delete' });
                 var rowData = $grid.pqGrid("getRowData", { rowIndx: rowIndx });
                 var ans = window.confirm("Are you sure to delete row No " + (rowIndx + 1) + "?");
-
+                var TagName =rowData.TagName;
                 if (ans) {
                     var AlarmID = $grid.pqGrid("getRecId", { rowIndx: rowIndx });
                     $grid.pqGrid("deleteRow", { rowIndx: rowIndx });
@@ -218,7 +218,7 @@ tr.pq-row-delete td
                     $.ajax($.extend({}, ajaxObj, {
                         context: $grid,
                         url: "alarms/delete?rowdata=", //for ASP.NET, java
-                        data: { AlarmID: AlarmID },
+                        data: { AlarmID: AlarmID, TagName: TagName },
                         success: function () {
                             this.pqGrid("commit");
                             this.pqGrid("refreshDataAndView");
